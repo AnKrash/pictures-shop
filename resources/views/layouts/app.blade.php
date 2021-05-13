@@ -7,10 +7,25 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>"@yield('title-block')</title>
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+     <!--   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     </head>
     <body>
     <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
-@yield('content')
-@include('inc.aside')
+    @include('inc.header')
+    @if(Request::is('/'))
+    @include('inc.hero')
+    @endif
+    <div class="container mt-5">
+        @include('inc.messages')
+        <div class="row">
+            <div class="col-8">
+                @yield('content')
+            </div>
+            <div class="col-4">
+                @include('inc.aside')
+            </div>
+        </div>
+        @include('inc.footer')
+    </div>
     </body>
     </html>
