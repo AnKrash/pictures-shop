@@ -14,18 +14,25 @@
     @include('inc.header')
     @if(Request::is('/'))
     @include('inc.hero')
+
+    @endif
+    @if(Request::is('basket'))
+        @include('inc.sale')
     @endif
     <div class="container mt-5">
         @include('inc.messages')
         <div class="row">
-            <div class="col-8">
+            <div class="col-9">
                 @yield('content')
             </div>
-            <div class="col-4">
-                @include('inc.aside')
+            <div class="col-3">
+
+                    @include('inc.aside')
+
             </div>
         </div>
         @include('inc.footer')
+
     </div>
     </body>
     </html>

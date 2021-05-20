@@ -2,14 +2,14 @@
 @extends('layouts.app')
 @section('title-block')Страница Контактов@endsection
 
-@section('content')
+@section('content')php
     <h1>Страница Контактов</h1>
 
     <form action={{route('contact-form')}} method="post">
         @csrf
 
         <div class="form-group">
-            <label for="name">Введите имя</label>git
+            <label for="name">Введите имя</label>
             <input type="text" name="name"  placeholder="Введите имя" id="name"
                    class="form-control">
         </div>

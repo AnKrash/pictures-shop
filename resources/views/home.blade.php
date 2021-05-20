@@ -3,6 +3,10 @@
 
 @section('content')
     <h1>Главная страница</h1>
+    <h3><a href="{{route('allDataPictures')}}">Картины</a></h3>
+    <h3><a href="{{route('allDataLamps')}}">Светильники</a></h3>
+    <h3><a href="{{route('allDataVase')}}">Вазы</a></h3>
+
 @endsection
 @section('aside')
 @parent
