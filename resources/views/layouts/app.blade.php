@@ -8,15 +8,15 @@
         <title>"@yield('title-block')</title>
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
      <!--   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+       <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     </head>
     <body>
-    <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     @include('inc.header')
     @if(Request::is('/'))
     @include('inc.hero')
 
     @endif
-    @if(Request::is('basket'))
+    @if(Request::is('basket/index'))
         @include('inc.sale')
     @endif
     <div class="container mt-5">

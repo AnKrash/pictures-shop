@@ -2,7 +2,7 @@
 @extends('layouts.app')
 @section('title-block')Страница Контактов@endsection
 
-@section('content')php
+@section('content')
     <h1>Страница Контактов</h1>
 
     <form action={{route('contact-form')}} method="post">
