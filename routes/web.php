@@ -82,3 +82,5 @@ Route::post('/basket/add/{id}', [BasketController::class, 'add'])
     ->name('basket.add');
 Route::patch('/basket/update', [BasketController::class, 'update']);
 Route::delete('/basket/remove', [BasketController::class, 'remove']);
+Route::get('basketcheckout',[BasketController::class,'checkout'])->name('basketchekout');
+Route::post('/basket/saveorder', [BasketController::class,'saveOrder'])->name('basket.saveorder');

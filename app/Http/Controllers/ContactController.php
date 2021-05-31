@@ -10,7 +10,8 @@ class ContactController extends Controller
 {
     public function submit(ContactRequest $req)
     {
-        // dd($req->input('subject'));
+
+        //dd($req->input('subject'));
         //$validation=$req->validate(
         // ['subject'=>'required|min:5|max:50',
         //'message'=>'required']

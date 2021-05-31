@@ -19,7 +19,7 @@
                    class="form-control">
         </div>
         <div class="form-group">
-            <label for="name">Тема сообщения</label>
+            <label for="subject">Тема сообщения</label>
             <input type="text" name="subject"  placeholder="Subject" id="subject"
                    class="form-control">
         </div>
