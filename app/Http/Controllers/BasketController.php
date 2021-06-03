@@ -11,6 +11,7 @@ use App\Models\Basket;
 use App\Http\Requests\ContactRequest;
 use  App\Models\Contact;
 use Illuminate\Support\Facades\DB;
+use MongoDB\Driver\Session;
 
 class BasketController extends Controller
 {
@@ -82,7 +83,8 @@ class BasketController extends Controller
                     "name" => $product->name,
                     "quantity" => 1,
                     "price" => $product->price,
-                    "photo" => $product->image
+                    "photo" => $product->image,
+                    "id" => $product->id
                 ]
             ];
             session()->put('cart', $cart);
@@ -99,7 +101,8 @@ class BasketController extends Controller
             "name" => $product->name,
             "quantity" => 1,
             "price" => $product->price,
-            "photo" => $product->image
+            "photo" => $product->image,
+            "id" => $product->id
         ];
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
@@ -128,40 +131,90 @@ class BasketController extends Controller
     }
 
 
-    public function saveOrder(Request  $request)
+    public function saveOrder(Request $request)
     {
         // проверяем данные формы оформления
-       $this->validate($request, [
+        $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|max:255',
             'address' => 'required|max:255',
         ]);
 
-
-       $order=new Order();
-        $order-> name = $request->input('name');
-        $order-> email = $request->input('email');
-        $order-> phone = $request->input('phone');
+        $order = new Order();
+        $order->name = $request->input('name');
+        $order->email = $request->input('email');
+        $order->phone = $request->input('phone');
         $order->address = $request->input('address');
-        $order-> comment = $request->input('comment');
+        $order->comment = $request->input('comment');
         $order->save();
 
 
-
-        $values = $request->session()->all();
-        //dump($values);
-        foreach ($values as $value){
-echo $value;
+        //$cart = $request->session()->all();
+        // dump($values);
+        // $cart=$request->session()->get('cart');
+//todo check quantity, return error if not matched
+     /*   $ids = array_column($request->session()->get('cart'), 'id');
+        $items = picture::whereIn('id', $ids)->get();
+        foreach($items as $quantity){
+            if ($quantity > DB::table('pictures')->where('id', '=',$ids )->get()){
+                echo ("It is not pictures in this quantity!");
+            }
         }
+        dd($items);
+*/
+        //   $input = $request->only(['name', 'address']); //information from basket session!!!
+        //   dump($input);
+
+        foreach ($request->session()->get('cart') as $item) {
+            $op = new Order_picture();
+            $op->picture_id = $item["id"];
+            $op->quantity = $item["quantity"];
+            $op->order_id = $order->id;
+            $op->save();
+        }
+
+        //todo delete cart from session
+
+        //  $cart=$request->session()->get();
+        //   $request->quantity=$cart[$request->id]["quantity"];
+        //   dump($cart);
+
+        //     $carts = $request->session()->all();
+        //       dump($carts);
+
+
+        // foreach ($cart as $key){
+        /* foreach ($cart as $key=>$value)
+           {
+   if ($key="name"){
+
+       echo $value;}
+
+   }*/
+        //   }
+
+        //;
+        //$i=$request->session()->get('picture_id');
+        /*  if (isset($cart[$id])) {
+              $id= $request->session()->get('id', '');
+              dump($id);}
+        */
+        // dump($values);
+        /*foreach ($values as $value){
+var_dump($values);
+            redirect()->back();
+            //return view ('/');
+        }
+        */
+//dump($values);
 
 
         //$orderpictures=new Order_picture();
-      // $cart [$request->id]->input('picture_id');
+        // $cart [$request->id]->input('picture_id');
 
         //$cart->quantity = $request->input('quantity');
-       // $cart->save();
-
+        // $cart->save();
 
 
         /*    $basket = Basket::getBasket();
@@ -189,4 +242,5 @@ echo $value;
         }
         */
     }
+
 }

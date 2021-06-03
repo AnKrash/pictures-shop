@@ -16,6 +16,7 @@ class Order extends Model
         'comment',
         'amount',
     ];
+
     public function items() {
         return $this->hasMany(Order_picture::class);
     }
