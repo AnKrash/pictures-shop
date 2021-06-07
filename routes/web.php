@@ -84,3 +84,7 @@ Route::patch('/basket/update', [BasketController::class, 'update']);
 Route::delete('/basket/remove', [BasketController::class, 'remove']);
 Route::get('basketcheckout',[BasketController::class,'checkout'])->name('basketchekout');
 Route::post('/basket/saveorder', [BasketController::class,'saveOrder'])->name('basket.saveorder');
+//Route::get('/adminOrders', [BDController::class, 'adminOrders'])
+//    ->name('adminOrders');
+
+Route::resource('admin_orders', \App\Http\Controllers\AdminOrderController::class);

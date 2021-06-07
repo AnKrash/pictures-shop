@@ -12,11 +12,13 @@ use App\Http\Requests\ContactRequest;
 use  App\Models\Contact;
 use Illuminate\Support\Facades\DB;
 use MongoDB\Driver\Session;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class BasketController extends Controller
 {
     public function index()
     {
+        var_dump(config('mail.mailers.smtp'));
         return view('basketindex');
     }
 
@@ -149,7 +151,6 @@ class BasketController extends Controller
         $order->comment = $request->input('comment');
         $order->save();
 
-
         //$cart = $request->session()->all();
         // dump($values);
         // $cart=$request->session()->get('cart');
@@ -174,7 +175,43 @@ class BasketController extends Controller
             $op->save();
         }
 
-        //todo delete cart from session
+        $mailSets =config('mail.mailers.smtp');
+
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->Mailer = "smtp";
+     // $mail->SMTPDebug  = 1;
+        $mail->SMTPAuth   = TRUE;
+        $mail->SMTPSecure = "tls";
+        $mail->IsHTML(true);
+
+        //todo move to envs
+        env("MAIL_PORT");
+        $mail->Host       = $mailSets["host"];
+
+        $mail->Username   = $mailSets["username"];
+
+        $mail->Password   = $mailSets["password"];
+
+
+        $mail->SetFrom("from-email@gmail.com", "from-name");
+      $mail->AddAddress ("{$order->email}",'admin');
+
+        $mail->Subject = "Order from picture-shop";
+        $content = "<b>Thank you for your order on picture-shop!</b>";
+
+        $mail->MsgHTML($content);
+        if(!$mail->Send()) {
+            echo "Error while sending Email.";
+            var_dump($mail);
+        } else {
+            echo "Email sent successfully";
+        }
+
+        $request->session()->flush();
+
+
+        return view('saveorder');
 
         //  $cart=$request->session()->get();
         //   $request->quantity=$cart[$request->id]["quantity"];

@@ -20,6 +20,23 @@
                    placeholder="Код 1-Современное искусство, Код 2-Классическое, Код 3-Скульптуры" id="code"
                    class="form-control">
         </div>
+      <!--  <div class="dropdown-menu">
+            <h6 class="dropdown-header">Dropdown header</h6>
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+        </div>
+        <div class="dropdown open">
+            <a class="btn btn-secondary dropdown-toggle"  id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose the class
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
+        -->
         <div class="form-group">
             <label for="message"> description</label>
             <textarea name="message" id="message" placeholder="Введите описание товара"

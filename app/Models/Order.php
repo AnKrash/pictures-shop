@@ -14,10 +14,13 @@ class Order extends Model
         'phone',
         'address',
         'comment',
-        'amount',
     ];
 
-    public function items() {
-        return $this->hasMany(Order_picture::class);
+    /**
+     * connection to pictures table
+     */
+    public function pictures()
+    {
+        return $this->belongsToMany(picture::class, "order_pictures")->withPivot('quantity');
     }
 }

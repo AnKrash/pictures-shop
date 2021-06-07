@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class picture extends Model
 {
-    public function baskets()
-    {
-        return $this->belongsToMany(Basket::class)->withPivot('quantity');
-    }
+//    public function baskets()
+//    {
+//        return $this->belongsToMany(Basket::class)->withPivot('quantity');
+//    }
 }
