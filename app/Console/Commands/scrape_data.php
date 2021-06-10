@@ -41,7 +41,8 @@ class scrape_data extends Command
     {
         $web = new HtmlWeb();
         $page = 1;
-        $count = 0;
+        $count = 1;
+        $code = 1;
         while (true) {
             $html = $web->load('https://rozetka.com.ua/kartini/c4629249?page=' . $page);
             $lastPage = $html->find(".pagination__link", -1)->innertext;
@@ -56,26 +57,30 @@ class scrape_data extends Command
                 $html = $web->load($element->href);
                 $title = $html->find(".product__title", 0);
                 $img = $html->find(".product-photo__picture", 0);
-                $description=$html->find('.product-about__description-content ',0);
+                $description = $html->find('.product-about__description-content.text p', 0);
+
+                $url = $img->src;
+                $size = getimagesize($url);
+                $extension = image_type_to_extension($size[2]);
 
                 //TODO save them into the db
                 $picture = new picture();
                 $picture->name = $title->innertext;
                 $picture->price = $count;
-                $picture->code = $count;
-                $picture->description=$description->innertext;
-                $picture->image = $img->src;
+                $picture->code = $code;
+                $picture->description = $description;
+                $picture->image = $count . $extension;
                 $picture->save();
 
+                // https://common-api.rozetka.com.ua/v2/goods/get-price/?country=UA&ids=221848159
+
+                $code++;
+                if ($code > 3) {
+                    $code = 1;
+                }
                 $count++;
 
-                $url = $img->src;
-                // localhost/img/$img;
-                //   $img save to db
-                $size = getimagesize($url);
-                $extension = image_type_to_extension($size[2]);
-
-                file_put_contents("public/img/" . $count. $extension, file_get_contents($url));
+                file_put_contents("public/img/" . $count . $extension, file_get_contents($url));
             }
 
             if ($page >= (int)$lastPage) {
