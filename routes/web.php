@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\BDController;
 use App\Http\Controllers\BasketController;
+use App\Http\Controllers\AdminOrderController;
 
 Route::get('/', function () {
     return view('home');
@@ -11,12 +12,10 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-//Route::get('/bdvase', [ContactController::class, 'bdvase'])
-// ->name('bdvase');
+
 Route::get('/bdpictures', [ContactController::class, 'bdpictures'])
     ->name('bdpictures');
-//Route::get('/bdaccess', [ContactController::class, 'bdaccess'])
-//->name('bdaccess');
+
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
@@ -35,28 +34,16 @@ Route::get('/pictures', [BDController::class, 'allDataPictures'])
 Route::get('/lamps', [BDController::class, 'allDataLamps'])
     ->name('allDataLamps');
 
-//Route::get('/pictures',[ContactController::class, 'pictures'])
-//->name('pictures');
-//Route::get('/basket/index', [BasketController::class, 'index'])->name('basket.index');
-//Route::get('/vase', function () {
-// return view('inc/vase');
-//})->name('vase');
-//Route::get('/vase/{product}', [ContactController::class, 'vaseProduct'])
-// ->name('vaseProduct');
-//Route::get('/messagesVasas', [BDController::class,'messagesVasas'])
-//->name('messagesVasas');
+
 Route::get('/allDataVasas', [BDController::class, 'allDataVase'])
     ->name('allDataVase');
 
 Route::get('/admin', [ContactController::class, 'admin'])
     ->name('admin');
 
-//Route::post('/bdvase/submit', [BDController::class, 'submitVase'])
-// ->name('admin-form-bdvase');
+
 Route::post('/bdpictures/submit', [BDController::class, 'submitPictures'])
     ->name('admin-form-pictures');
-//Route::post('/bdacess/submit', [BDController::class, 'submitAccess'])
-//  ->name('admin-form-access');
 
 
 Route::get('/contact/all/{id}/update', [ContactController::class, 'updateMessage'])->name('contact-update');
@@ -70,11 +57,9 @@ Route::get('/contact/all', [ContactController::class, 'allData'])->name('contact
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact-form');
 
 
-//Route::get('/one-message-lamp/{id}', [BDController::class, 'showOneMessageLamp'])->name('one-message-lamp');
+
 Route::get('/one-message-picture/{id}', [BDController::class, 'showOneMessagePicture'])
     ->name('one-message-picture');
-//Route::get('/one-message-vase/{id}', [BDController::class, 'showOneMessageVase'])
-// ->name('one-message-vase');
 
 //Корзина!!!
 Route::post('/basket/add/{id}', [BasketController::class, 'add'])
@@ -85,6 +70,9 @@ Route::delete('/basket/remove', [BasketController::class, 'remove']);
 Route::get('basketcheckout',[BasketController::class,'checkout'])->name('basketchekout');
 Route::post('/basket/saveorder', [BasketController::class,'saveOrder'])->name('basket.saveorder');
 //Route::get('/adminOrders', [BDController::class, 'adminOrders'])
-//    ->name('adminOrders');
+ //  ->name('adminOrders');
 
-Route::resource('admin_orders', \App\Http\Controllers\AdminOrderController::class);
+Route::get('admin_order', [\App\Http\Controllers\AdminOrderController::class,'index'])
+    ->name('admin_order');
+Route::get('show/{id}', [\App\Http\Controllers\AdminOrderController::class,'show'])
+    ->name('show');

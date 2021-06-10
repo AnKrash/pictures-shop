@@ -119,7 +119,7 @@ class BDController extends Controller
 
     }
 
-    public function index()
+  /*  public function index()
     {
 
 
@@ -137,8 +137,8 @@ class BDController extends Controller
 //
 //        }
 
-        return view('adminOrders', ['orders' => $orders]);
-    }
+        return view('admin_order/index', ['orders' => $orders]);
+    }*/
 }
 
 

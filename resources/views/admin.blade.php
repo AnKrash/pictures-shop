@@ -6,7 +6,7 @@
     <br>
 
     <a href="{{route('bdpictures')}}" ><h2>Data base</h2>  </a>
-    <a href="{{route('adminOrders')}}" ><h2>Orders</h2>  </a>
+    <a href="{{route('admin_order')}}" ><h2>Orders</h2>  </a>
 
 
 @endsection

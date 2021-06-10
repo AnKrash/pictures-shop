@@ -18,7 +18,7 @@ class BasketController extends Controller
 {
     public function index()
     {
-        var_dump(config('mail.mailers.smtp'));
+        //var_dump(config('mail.mailers.smtp'));
         return view('basketindex');
     }
 
@@ -185,7 +185,7 @@ class BasketController extends Controller
         $mail->SMTPSecure = "tls";
         $mail->IsHTML(true);
 
-        //todo move to envs
+
         env("MAIL_PORT");
         $mail->Host       = $mailSets["host"];
 

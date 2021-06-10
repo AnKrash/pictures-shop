@@ -11,7 +11,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
-        "phpmailer/phpmailer": "^6.4"
+        "phpmailer/phpmailer": "^6.4",
+        "simplehtmldom/simplehtmldom": "^2.0@RC"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

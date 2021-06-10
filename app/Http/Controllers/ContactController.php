@@ -11,12 +11,6 @@ class ContactController extends Controller
     public function submit(ContactRequest $req)
     {
 
-        //dd($req->input('subject'));
-        //$validation=$req->validate(
-        // ['subject'=>'required|min:5|max:50',
-        //'message'=>'required']
-
-        // );
         $contact = new Contact();
         $contact->name = $req->input('name');//записываем новые значения в БД
         $contact->email = $req->input('email');
@@ -35,8 +29,7 @@ class ContactController extends Controller
 
         $contact = new Contact();
         return view('messages', ['data1' => $contact->all()]);
-        //return view ('messages',['data1'=>$contact->orderBy('id','asc')->skip(1)->take(2)->get()]);
-        // return view ('messages',['data1'=>$contact->where('subject','==','hello')]);
+
     }
 
     public function showOneMessage($id)//выводит одно сообщение
@@ -72,7 +65,6 @@ class ContactController extends Controller
         return redirect()->route('contact-data')->with('success', 'Сообщение было удалено!');
     }
     public function lamps(){
-        //dump($this->lamps());//если приходит продукт!
 
         return view('inc/lamps');
     }
@@ -82,9 +74,7 @@ class ContactController extends Controller
     public function vase(){
         return view('inc/vase');
     }
-   // public function vaseProduct($product - null){
-  //      return view('product',['product->$product']);
-  //  }
+
     public function admin(){
         return view('admin');
     }

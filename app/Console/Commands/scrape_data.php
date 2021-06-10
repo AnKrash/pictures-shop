@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\picture;
 use Illuminate\Console\Command;
+use simplehtmldom\HtmlWeb;
 
 class scrape_data extends Command
 {
@@ -33,11 +35,55 @@ class scrape_data extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return void
      */
     public function handle()
     {
-        var_dump("test");
-        return 0;
+        $web = new HtmlWeb();
+        $page = 1;
+        $count = 0;
+        while (true) {
+            $html = $web->load('https://rozetka.com.ua/kartini/c4629249?page=' . $page);
+            $lastPage = $html->find(".pagination__link", -1)->innertext;
+            if (!preg_match('!\d+!', $lastPage, $lastPage)) {
+                echo "error getting last page";
+                return;
+            }
+            $lastPage = $lastPage[0];
+            echo ' scraping https://rozetka.com.ua/kartini/c4629249?page=' . $page . "\n";
+
+            foreach ($html->find('.goods-tile__picture.ng-star-inserted') as $element) {
+                $html = $web->load($element->href);
+                $title = $html->find(".product__title", 0);
+                $img = $html->find(".product-photo__picture", 0);
+                $description=$html->find('.product-about__description-content ',0);
+
+                //TODO save them into the db
+                $picture = new picture();
+                $picture->name = $title->innertext;
+                $picture->price = $count;
+                $picture->code = $count;
+                $picture->description=$description->innertext;
+                $picture->image = $img->src;
+                $picture->save();
+
+                $count++;
+
+                $url = $img->src;
+                // localhost/img/$img;
+                //   $img save to db
+                $size = getimagesize($url);
+                $extension = image_type_to_extension($size[2]);
+
+                file_put_contents("public/img/" . $count. $extension, file_get_contents($url));
+            }
+
+            if ($page >= (int)$lastPage) {
+                echo "scrapping successfully finished " . $count . " pictures were scraped";
+                return;
+            }
+
+            $page++;
+        }
     }
 }

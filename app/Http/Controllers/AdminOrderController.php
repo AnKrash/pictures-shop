@@ -18,19 +18,8 @@ class AdminOrderController extends Controller
 
         $orders = new Order();// Code from Master
         $orders = $orders->get();
-//        foreach ($orders as $o) {
-//
-//            foreach ($o->pictures as $p) {
-//                $data = $p->id;//id picture
-//
-//                $quantity = $p->pivot->quantity;//quantity of picture
-//
-//                return view('adminOrders', $data, $quantity);
-//            }
-//
-//        }
 
-        return view('adminOrders', ['orders' => $orders]);
+        return view('admin_order/index', ['orders' => $orders]);
     }
 
     /**
@@ -58,11 +47,15 @@ class AdminOrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+
+        $order =  Order::findOrFail($id);
+
+        return view('admin_order/show', ['order' =>$order]);
+
     }
 
     /**
