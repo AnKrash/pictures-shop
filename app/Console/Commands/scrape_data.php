@@ -43,6 +43,7 @@ class scrape_data extends Command
         $page = 1;
         $count = 1;
         $code = 1;
+        $price=50;
         while (true) {
             $html = $web->load('https://rozetka.com.ua/kartini/c4629249?page=' . $page);
             $lastPage = $html->find(".pagination__link", -1)->innertext;
@@ -66,7 +67,7 @@ class scrape_data extends Command
                 //TODO save them into the db
                 $picture = new picture();
                 $picture->name = $title->innertext;
-                $picture->price = $count;
+                $picture->price = $price;
                 $picture->code = $code;
                 $picture->description = $description;
                 $picture->image = $count . $extension;
@@ -77,6 +78,11 @@ class scrape_data extends Command
                 $code++;
                 if ($code > 3) {
                     $code = 1;
+                }
+                $price +=50;
+                if($price>500)
+                {
+                    $price=50;
                 }
                 $count++;
 

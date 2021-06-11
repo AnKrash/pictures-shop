@@ -2,13 +2,13 @@
 @section('title-block') {{$product->name}} @endsection
 
 @section('content')
-    <h1>{{$product->name}}</h1>
+    <h1>Name:{{$product->name}}</h1>
 
     <div class="alert alert-info">
-        <p>{{$product->description}}</p>
-        <p>{{$product->image}}</p>
-        <p><small>{{$product->created_at}}</small></p>
-        <p><small>{{$product->price}}</small></p>
+        <p>Description:{{$product->description}}</p>
+         <img src="public/img/{{$product->image}}" alt="picture">
+        <p><small>Created at:{{$product->created_at}}</small></p>
+        <p><small>Price:{{$product->price}}</small></p>
         <form action="{{ route('basket.add', ['id' => $product->id]) }}"
               method="post" class="form-inline">
 

@@ -12,6 +12,7 @@
     </head>
     <body>
     @include('inc.header')
+
     @if(Request::is('/'))
     @include('inc.hero')
 
@@ -19,6 +20,7 @@
     @if(Request::is('basket/index'))
         @include('inc.sale')
     @endif
+
     <div class="container mt-5">
         @include('inc.messages')
         <div class="row">
@@ -26,9 +28,9 @@
                 @yield('content')
             </div>
             <div class="col-3">
-
-                    @include('inc.aside')
-
+                @if(Request::is('/','contact','pictures','allDataVasas','lamps','basket/index'))
+                             @include('inc.aside')
+@endif
             </div>
         </div>
         @include('inc.footer')

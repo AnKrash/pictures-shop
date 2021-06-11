@@ -13,7 +13,7 @@
         <p>Phone:{{$order->phone}}</p>
         <p>Address:{{$order->address}}</p>
         <p>Comment:{{$order->comment}}</p>
-        <p>{{$order->pictures}}</p>
+
         <p></p>
         @foreach($order->pictures as $p)
        <p>Picture:{{$name=$p->name}}<p/>
