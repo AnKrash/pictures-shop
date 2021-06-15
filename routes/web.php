@@ -13,8 +13,7 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/bdpictures', [ContactController::class, 'bdpictures'])
-    ->name('bdpictures');
+
 
 Route::get('/contact', function () {
     return view('contact');
@@ -38,12 +37,12 @@ Route::get('/lamps', [BDController::class, 'allDataLamps'])
 Route::get('/allDataVasas', [BDController::class, 'allDataVase'])
     ->name('allDataVase');
 
-Route::get('/admin', [ContactController::class, 'admin'])
-    ->name('admin');
-
-
-Route::post('/bdpictures/submit', [BDController::class, 'submitPictures'])
-    ->name('admin-form-pictures');
+//Route::get('/admin', [ContactController::class, 'admin'])
+//    ->name('admin')->middleware('auth');
+//
+//
+//Route::post('/bdpictures/submit', [BDController::class, 'submitPictures'])
+//    ->name('admin-form-pictures')->middleware('auth');;
 
 
 Route::get('/contact/all/{id}/update', [ContactController::class, 'updateMessage'])->name('contact-update');
@@ -57,7 +56,6 @@ Route::get('/contact/all', [ContactController::class, 'allData'])->name('contact
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact-form');
 
 
-
 Route::get('/one-message-picture/{id}', [BDController::class, 'showOneMessagePicture'])
     ->name('one-message-picture');
 
@@ -67,12 +65,36 @@ Route::post('/basket/add/{id}', [BasketController::class, 'add'])
     ->name('basket.add');
 Route::patch('/basket/update', [BasketController::class, 'update']);
 Route::delete('/basket/remove', [BasketController::class, 'remove']);
-Route::get('basketcheckout',[BasketController::class,'checkout'])->name('basketchekout');
-Route::post('/basket/saveorder', [BasketController::class,'saveOrder'])->name('basket.saveorder');
+Route::get('basketcheckout', [BasketController::class, 'checkout'])->name('basketchekout');
+Route::post('/basket/saveorder', [BasketController::class, 'saveOrder'])->name('basket.saveorder');
 //Route::get('/adminOrders', [BDController::class, 'adminOrders'])
- //  ->name('adminOrders');
+//  ->name('adminOrders');
+//
+//Route::get('admin_order', [\App\Http\Controllers\AdminOrderController::class, 'index'])
+//    ->name('admin_order')->middleware('auth');;
+//Route::get('show/{id}', [\App\Http\Controllers\AdminOrderController::class, 'show'])
+//    ->name('show')->middleware('auth');;
 
-Route::get('admin_order', [\App\Http\Controllers\AdminOrderController::class,'index'])
-    ->name('admin_order');
-Route::get('show/{id}', [\App\Http\Controllers\AdminOrderController::class,'show'])
-    ->name('show');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+\Illuminate\Support\Facades\Auth::routes();
+
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('admin')->group(function () {
+
+        Route::get('order', [\App\Http\Controllers\AdminOrderController::class, 'index'])
+            ->name('admin_order');
+
+        Route::get('admin_order/show/{id}', [\App\Http\Controllers\AdminOrderController::class, 'show'])
+            ->name('admin_order.show');//!!!
+
+        Route::post('/bdpictures/submit', [BDController::class, 'submitPictures'])
+            ->name('/form-pictures');//!!!
+
+        Route::get('/', [ContactController::class, 'admin'])
+            ->name('admin');//!!!
+
+        Route::get('/bdpictures', [ContactController::class, 'bdpictures'])
+            ->name('bdpictures');//!!!
+    });
+});

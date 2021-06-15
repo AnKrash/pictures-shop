@@ -6,7 +6,7 @@
 
     <div class="alert alert-info">
         <p>Description:{{$product->description}}</p>
-         <img src="public/img/{{$product->image}}" alt="picture">
+         <img src="img/{{$product->image}}" alt="picture">
         <p><small>Created at:{{$product->created_at}}</small></p>
         <p><small>Price:{{$product->price}}</small></p>
         <form action="{{ route('basket.add', ['id' => $product->id]) }}"

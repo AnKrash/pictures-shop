@@ -20,17 +20,18 @@
     @if(Request::is('basket/index'))
         @include('inc.sale')
     @endif
-
+    @if(Request::is('home'))
+        @include('inc/carousel')
+    @endif
     <div class="container mt-5">
         @include('inc.messages')
-        <div class="row">
-            <div class="col-9">
+
                 @yield('content')
-            </div>
-            <div class="col-3">
+
                 @if(Request::is('/','contact','pictures','allDataVasas','lamps','basket/index'))
                              @include('inc.aside')
 @endif
+
             </div>
         </div>
         @include('inc.footer')

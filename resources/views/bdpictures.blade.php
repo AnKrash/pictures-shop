@@ -6,7 +6,7 @@
     <p></p>
 
 
-    <form action={{route('admin-form-pictures')}} method="post">
+    <form action={{route('/form-pictures')}} method="post">
         @csrf
 
         <div class="form-group">

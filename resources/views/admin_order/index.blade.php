@@ -14,7 +14,7 @@
                 <td></td>
                 <p>Customer:{{$order->name}}</p>
                 <p>Created at:{{$order->created_at}}</p>
-                <a class="btn btn-primary" href="{{route('show',$order->id)}}">Details</a>
+                <a class="btn btn-primary" href="{{route('admin_order.show',$order->id)}}">Details</a>
             </tr>
         @endforeach
         </tbody>

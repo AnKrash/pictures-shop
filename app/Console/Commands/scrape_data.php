@@ -39,20 +39,22 @@ class scrape_data extends Command
      */
     public function handle()
     {
+        ini_set('memory_limit', '-1');
+
         $web = new HtmlWeb();
         $page = 1;
         $count = 1;
         $code = 1;
-        $price=50;
+        $price = 50;
         while (true) {
-            $html = $web->load('https://rozetka.com.ua/kartini/c4629249?page=' . $page);
+            $html = $web->load('https://rozetka.com.ua/kartini/c4629249/page=' . $page);
             $lastPage = $html->find(".pagination__link", -1)->innertext;
             if (!preg_match('!\d+!', $lastPage, $lastPage)) {
                 echo "error getting last page";
                 return;
             }
             $lastPage = $lastPage[0];
-            echo ' scraping https://rozetka.com.ua/kartini/c4629249?page=' . $page . "\n";
+            echo ' scraping https://rozetka.com.ua/kartini/c4629249/page=' . $page . "\n";
 
             foreach ($html->find('.goods-tile__picture.ng-star-inserted') as $element) {
                 $html = $web->load($element->href);
@@ -60,11 +62,22 @@ class scrape_data extends Command
                 $img = $html->find(".product-photo__picture", 0);
                 $description = $html->find('.product-about__description-content.text p', 0);
 
+                if (!$img)
+                {
+                    echo "error getting image";
+                    continue;
+                }
+
+                if (!$title)
+                {
+                    echo "error getting title";
+                    continue;
+                }
+
                 $url = $img->src;
                 $size = getimagesize($url);
                 $extension = image_type_to_extension($size[2]);
 
-                //TODO save them into the db
                 $picture = new picture();
                 $picture->name = $title->innertext;
                 $picture->price = $price;
@@ -73,16 +86,17 @@ class scrape_data extends Command
                 $picture->image = $count . $extension;
                 $picture->save();
 
-                // https://common-api.rozetka.com.ua/v2/goods/get-price/?country=UA&ids=221848159
-
                 $code++;
                 if ($code > 3) {
                     $code = 1;
                 }
-                $price +=50;
-                if($price>500)
-                {
-                    $price=50;
+
+                //todo ай-ай-ай
+                // https://common-api.rozetka.com.ua/v2/goods/get-price/?country=UA&id=213034495
+                // var_dump(json_decode($json, true));
+                $price += 50;
+                if ($price > 500) {
+                    $price = 50;
                 }
                 $count++;
 
