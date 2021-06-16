@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
             ->name('admin_order.show');//!!!
 
         Route::post('/bdpictures/submit', [BDController::class, 'submitPictures'])
-            ->name('/form-pictures');//!!!
+            ->name('form-pictures');//!!!
 
         Route::get('/', [ContactController::class, 'admin'])
             ->name('admin');//!!!

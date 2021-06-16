@@ -45,7 +45,8 @@ class scrape_data extends Command
         $page = 1;
         $count = 1;
         $code = 1;
-        $price = 50;
+
+        // $price = 50;
         while (true) {
             $html = $web->load('https://rozetka.com.ua/kartini/c4629249/page=' . $page);
             $lastPage = $html->find(".pagination__link", -1)->innertext;
@@ -61,18 +62,26 @@ class scrape_data extends Command
                 $title = $html->find(".product__title", 0);
                 $img = $html->find(".product-photo__picture", 0);
                 $description = $html->find('.product-about__description-content.text p', 0);
+                $pr = $html->find('.detail-code', 0);
+                $children = $pr->children; // get an array of children
+                foreach ($children as $child) {
+                    $child->outertext = ''; // This removes the element, but MAY NOT remove it from the original $myDiv
+                }
 
-                if (!$img)
-                {
+                $id = trim($pr->innertext, " " . chr(0xC2) . chr(0xA0));
+
+                if (!$img) {
                     echo "error getting image";
                     continue;
                 }
 
-                if (!$title)
-                {
+                if (!$title) {
                     echo "error getting title";
                     continue;
                 }
+                $price_html = $web->load('https://common-api.rozetka.com.ua/v2/goods/get-price/?country==UA&id='
+                    . $id);
+                $arr = json_decode($price_html, true);
 
                 $url = $img->src;
                 $size = getimagesize($url);
@@ -80,7 +89,7 @@ class scrape_data extends Command
 
                 $picture = new picture();
                 $picture->name = $title->innertext;
-                $picture->price = $price;
+                $picture->price = $arr["price"];
                 $picture->code = $code;
                 $picture->description = $description;
                 $picture->image = $count . $extension;
@@ -94,10 +103,14 @@ class scrape_data extends Command
                 //todo ай-ай-ай
                 // https://common-api.rozetka.com.ua/v2/goods/get-price/?country=UA&id=213034495
                 // var_dump(json_decode($json, true));
-                $price += 50;
-                if ($price > 500) {
-                    $price = 50;
-                }
+
+
+                // $price += 50;
+                //  if ($price > 500) {
+                //     $price = 50;
+                //   }
+
+
                 $count++;
 
                 file_put_contents("public/img/" . $count . $extension, file_get_contents($url));

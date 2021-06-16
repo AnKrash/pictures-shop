@@ -5,13 +5,11 @@
     <h1>Классические картины</h1>
 
     <div class="container ">
-        <div class="card-columns">
+        <div class="card-group">
             @foreach($data as $el)
                 <div class="card shadow-sm ">
 
-                    {{--                            TODO change to div, set width, heigth to div set background-image and background-size --}}
-
-                    <img class="bd-placeholder-img card-img-top" style="background-size: cover" src="img/{{$el->image}}"
+                    <img class="bd-placeholder-img card-img-top" style="height: 400px" src="img/{{$el->image}}"
                          alt="picture">
                     <div>
                         <div class="card-body">
