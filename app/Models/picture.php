@@ -12,4 +12,5 @@ class picture extends Model
 //    {
 //        return $this->belongsToMany(Basket::class)->withPivot('quantity');
 //    }
+
 }

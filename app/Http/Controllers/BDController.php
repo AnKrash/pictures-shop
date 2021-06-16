@@ -90,11 +90,12 @@ class BDController extends Controller
     /* public function messagesVasas(){
          return view('inc/messagesVasas');
      }*/
-    public function allDataPictures()//выводит все сообщения
+   public function allDataPictures()//выводит все сообщения
     {
         $contact = new picture();
 
-        return view('messagesPictures', ['data' => $contact->where('code', '=', '2')->get()]);
+        return view('messagesPictures',
+            ['data' => $contact->where('code', '=', '2')->paginate(15)]);
     }
 
     public function allDataLamps()//выводит все сообщения
