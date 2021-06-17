@@ -84,7 +84,8 @@ class BDController extends Controller
     {
         $contact = new picture();
 
-        return view('messagesVasas', ['data' => $contact->where('code', '=', '1')->get()]);
+        return view('messagesVasas',
+            ['data' => $contact->where('code', '=', '1')->paginate(15)]);
 
     }
 
@@ -103,7 +104,8 @@ class BDController extends Controller
     {
         $contact = new picture();
 
-        return view('messagesLamps', ['data' => $contact->where('code', '=', '3')->get()]);
+        return view('messagesLamps',
+            ['data' => $contact->where('code', '=', '3')->paginate(15)]);
     }
 
     /*  public function showOneMessageLamp($id)//выводит одно сообщение

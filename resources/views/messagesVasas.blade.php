@@ -4,16 +4,47 @@
 @section('content')
     <h1>Современное искусство </h1>
 
+    <div class="container ">
+        <div class="card-group">
+            @foreach($data as $el)
+                <div class="card shadow-sm ">
 
+                    <img class="bd-placeholder-img card-img-top" style="height: 400px" src="img/{{$el->image}}"
+                         alt="picture">
+                    <div>
+                        <div class="card-body">
+                            <p class="card-text">{{$el->name}}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{{route('one-message-picture', $el->id)}}"
+                                       class="btn btn-sm btn-outline-secondary">Детальнее</a>
+                                </div>
+                                <small class="text-muted">Price:{{$el->price}}</small>
+                            </div>
 
-    @foreach($data as $el)
-        <div class="alert alert-info">
-            <h3>{{$el->name}}</h3>
-            <p>{{$el->description}}</p>
-            <p> <img src="img/{{$el->image}}" alt="picture"> </p>
-            <p>{{$el->price}}</p>
-            <a href="{{route('one-message-picture', $el->id)}}" class="btn btn-success">Детальнее</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            @endforeach
+
         </div>
-    @endforeach
+        <div class="container visually-hidden">
+            @foreach ($data as $el)
+                {{ $el->name }}
+            @endforeach
+        </div>
+        <br><br>
+        {{ $data->onEachSide(1)->links() }}
 
+        <footer class="text-muted py-5">
+            <div class="container">
+                <p class="float-end mb-1">
+                    <a href="#">Back to top</a>
+                </p>
+
+            </div>
+        </footer>
+    </div>
 @endsection
