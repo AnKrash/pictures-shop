@@ -100,15 +100,6 @@ class scrape_data extends Command
                     $code = 1;
                 }
 
-                //todo ай-ай-ай
-                // https://common-api.rozetka.com.ua/v2/goods/get-price/?country=UA&id=213034495
-                // var_dump(json_decode($json, true));
-
-
-                // $price += 50;
-                //  if ($price > 500) {
-                //     $price = 50;
-                //   }
 
 
                 $count++;

@@ -46,7 +46,7 @@ class BDController extends Controller
         //'message'=>'required']
 
         // );
-        var_dump(1);
+        //var_dump(1);
         $vase = new picture();
         $vase->name = $req->input('name');//записываем новые значения в БД
         $vase->code = $req->input('code');
