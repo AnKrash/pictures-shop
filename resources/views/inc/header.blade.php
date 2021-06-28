@@ -13,8 +13,12 @@
             <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('about')}}">Про нас</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('contact')}}">Контакты</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('contact-data')}}">Сообщения</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('basket.index')}}">Корзина</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('admin')}}">Страница Админа</a>
+
+            <a href="{{route('basket.index')}}"> <img src="/Img-main/shopping-cart-empty-side-view.svg" height="45"
+                                                      alt="basket">
+            </a>
+
+                    <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('admin')}}">Страница Админа</a>
         </nav>
     </div>
 

@@ -53,7 +53,7 @@ class BDController extends Controller
         $vase->description = $req->input('description');
         $vase->image = $req->input('image');
         $vase->price = $req->input('price');
-
+        $vase->quantity = $req->input('quantity');
         $vase->save();//сохраняем запись в БД
 
         return redirect()->route('admin')->with('success', 'Запись в базу сделана!');

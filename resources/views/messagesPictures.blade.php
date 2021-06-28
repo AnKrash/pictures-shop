@@ -9,7 +9,7 @@
             @foreach($data as $el)
                 <div class="card shadow-sm ">
 
-                    <img class="bd-placeholder-img card-img-top" style="height: 400px" src="img/{{$el->image}}"
+                    <img class="bd-placeholder-img card-img-top " style="height: 400px" src="img/{{$el->image}}"
                          alt="picture">
                     <div>
                         <div class="card-body">
@@ -18,7 +18,11 @@
                                 <div class="btn-group">
                                     <a href="{{route('one-message-picture', $el->id)}}"
                                        class="btn btn-sm btn-outline-secondary">Детальнее</a>
-                                </div>
+                                </div><br>
+                              <small class="card-text">Are available:{{$el->quantity}}</small>
+                                @if ($el->quantity<1)
+                                    @include('inc/out-of-stock')
+                                @endif
                                 <small class="text-muted">Price:{{$el->price}}</small>
                             </div>
 

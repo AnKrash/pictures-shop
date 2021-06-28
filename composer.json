@@ -13,8 +13,7 @@
         "laravel/tinker": "^2.5",
         "phpmailer/phpmailer": "^6.4",
         "simplehtmldom/simplehtmldom": "^2.0@RC",
-        "laravel/ui":"3.0",
-      "ext-json": "json_decode"
+        "laravel/ui":"3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

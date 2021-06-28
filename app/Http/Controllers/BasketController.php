@@ -143,6 +143,7 @@ class BasketController extends Controller
             'address' => 'required|max:255',
         ]);
 
+        //todo start transaction
         $order = new Order();
         $order->name = $request->input('name');
         $order->email = $request->input('email');
@@ -153,17 +154,28 @@ class BasketController extends Controller
 
         //$cart = $request->session()->all();
         // dump($values);
-        // $cart=$request->session()->get('cart');
-//todo check quantity, return error if not matched
-     /*   $ids = array_column($request->session()->get('cart'), 'id');
+        //   $cart=$request->session()->get('cart');
+
+
+        $ids = array_column($request->session()->get('cart'), 'id');
         $items = picture::whereIn('id', $ids)->get();
-        foreach($items as $quantity){
-            if ($quantity > DB::table('pictures')->where('id', '=',$ids )->get()){
-                echo ("It is not pictures in this quantity!");
-            }
+        $itemsByIds = [];
+        foreach ($items as $item) {
+            $itemsByIds[$item->id] = $item;
         }
-        dd($items);
-*/
+//        foreach ($items as $picture) {
+//            if ($picture->price < DB::table('pictures')->where('id', '=', $ids)->
+//                value('price')) {
+//                echo("It is not pictures in this quantity!");
+//            }
+//            dd( $picture->price);
+//            DB::table('pictures')->where('id', '=', $ids)->update(['price' => "`pictures`.price - $picture->price"]);
+//            //  UPDATE `pictures` SET price=price-$quantity WHERE id=$cart[id];
+//            // $picture=new picture();
+//            //      $picture->price=$price-1->input;
+//        }
+        //dd($items);
+
         //   $input = $request->only(['name', 'address']); //information from basket session!!!
         //   dump($input);
 
@@ -173,35 +185,54 @@ class BasketController extends Controller
             $op->quantity = $item["quantity"];
             $op->order_id = $order->id;
             $op->save();
+
+            //todo check item exists
+            $curPic = $itemsByIds[$op->picture_id];
+            //todo check quantity
+            if( $curPic->quantity < 1)
+                     {echo "It is not this picture on DataBase" ;}
+           // dd($item["quantity"]);
+            elseif ($curPic->quantity < $item["quantity"] & $curPic->quantity > 1)
+
+            {echo "This pictures in base less than order.Make order less quantity";}
+
+            $curPic->quantity = $curPic->quantity - $item["quantity"];
+            if($curPic->quantity>0)
+            {$curPic->save();}
+            //todo make ajax adding to cart with jQuery on index page
+            //todo add zoomer like in Rozetka to show image
+
+
+//            DB::table('pictures')->where('id', '=', $item["id"])->decrement('quantity', 100);
         }
 
-        $mailSets =config('mail.mailers.smtp');
+        $mailSets = config('mail.mailers.smtp');
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
         $mail->Mailer = "smtp";
-     // $mail->SMTPDebug  = 1;
-        $mail->SMTPAuth   = TRUE;
+        // $mail->SMTPDebug  = 1;
+        $mail->SMTPAuth = TRUE;
         $mail->SMTPSecure = "tls";
         $mail->IsHTML(true);
 
 
         env("MAIL_PORT");
-        $mail->Host       = $mailSets["host"];
+        $mail->Host = $mailSets["host"];
 
-        $mail->Username   = $mailSets["username"];
+        $mail->Username = $mailSets["username"];
 
-        $mail->Password   = $mailSets["password"];
+        $mail->Password = $mailSets["password"];
 
 
         $mail->SetFrom("from-email@gmail.com", "from-name");
-      $mail->AddAddress ("{$order->email}",'admin');
+        $mail->AddAddress("{$order->email}", 'admin');
 
         $mail->Subject = "Order from picture-shop";
         $content = "<b>Thank you for your order on picture-shop!</b>";
 
         $mail->MsgHTML($content);
-        if(!$mail->Send()) {
+        if (!$mail->Send()) {
             echo "Error while sending Email.";
             var_dump($mail);
         } else {
