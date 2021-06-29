@@ -1,26 +1,46 @@
 @extends('layouts.app')
 @section('title-block') {{$product->name}} @endsection
 
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/xzoom/dist/xzoom.css" media="all" />
+
+
+
+
 @section('content')
     <h1>Name:{{$product->name}}</h1>
     <div class="row">
         <div class="alert alert-info col-8">
             <p>Description:{{$product->description}}</p>
-           {{--<link rel="stylesheet" type="text/css" href="https://unpkg.com/xzoom/dist/xzoom.css" media="all" />--}}
-            <p><img class="xzoom5" src="/img/{{$product->image}}" xoriginal="/img/{{$product->image}}"
-                    alt="picture" ></p>
-
+            <img class="xzoom" src="/img/{{$product->image}}" xoriginal="/img/{{$product->image}}"
+                 alt="picture">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
             <script type="text/javascript" src="https://unpkg.com/xzoom/dist/xzoom.min.js"></script>
             <script>
-
-                jQuery(function ($) {
+                jQuery(function($) {
                     $(".xzoom").xzoom({
                         position: 'right',
-                        Xoffset: 15
+                        Xoffset: 15,
+
+
                     });
                 });
             </script>
+
+            {{--            <img class="xzoom5" id="xzoom-magnific" src="images/gallery/preview/01_b_car.jpg" xoriginal="images/gallery/original/01_b_car.jpg" />--}}
+            {{--            <div class="xzoom-thumbs">--}}
+            {{--                <a href="images/gallery/original/01_b_car.jpg"><img class="xzoom-gallery5" width="80" src="images/gallery/thumbs/01_b_car.jpg"  xpreview="images/gallery/preview/01_b_car.jpg" title="The description goes here"></a>--}}
+            {{--                <a href="images/gallery/original/02_o_car.jpg"><img class="xzoom-gallery5" width="80" src="images/gallery/preview/02_o_car.jpg" title="The description goes here"></a>--}}
+            {{--                <a href="images/gallery/original/03_r_car.jpg"><img class="xzoom-gallery5" width="80" src="images/gallery/preview/03_r_car.jpg" title="The description goes here"></a>--}}
+            {{--                <a href="images/gallery/original/04_g_car.jpg"><img class="xzoom-gallery5" width="80" src="images/gallery/preview/04_g_car.jpg" title="The description goes here"></a>--}}
+            {{--            </div>--}}
+
+{{--            <link rel="stylesheet" href="https://unpkg.com/xzoom/dist/xzoom.css" media="all"/>--}}
+{{--            <script>--}}
+{{--                jQuery(function ($) {--}}
+{{--                    $(".xzoom").xzoom({});--}}
+{{--                });--}}
+{{--            </script>--}}
+
             <p><small>Created at:{{$product->created_at}}</small></p>
             <p><small>Price:{{$product->price}}</small></p>
             <p>Are available: {{$product->quantity}} items</p>
@@ -55,6 +75,5 @@
                 accumsan mi vestibulum iaculis. Suspendisse malesuada, justo eget posuere rhoncus, enim quam semper
                 urna, sed pulvinar neque massa vitae est. Sed euismod arcu et venenatis tristique.</p>
         </div>
-
     </div>
 @endsection
