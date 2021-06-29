@@ -6,13 +6,14 @@
     <div class="row">
         <div class="alert alert-info col-8">
             <p>Description:{{$product->description}}</p>
-            <link rel="stylesheet" type="text/css" href="https://unpkg.com/xzoom/dist/xzoom.css" media="all" />
+           {{--<link rel="stylesheet" type="text/css" href="https://unpkg.com/xzoom/dist/xzoom.css" media="all" />--}}
             <p><img class="xzoom5" src="/img/{{$product->image}}" xoriginal="/img/{{$product->image}}"
                     alt="picture" ></p>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
             <script type="text/javascript" src="https://unpkg.com/xzoom/dist/xzoom.min.js"></script>
             <script>
+
                 jQuery(function ($) {
                     $(".xzoom").xzoom({
                         position: 'right',
