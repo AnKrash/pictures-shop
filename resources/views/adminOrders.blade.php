@@ -11,8 +11,8 @@
         @foreach($orders as $order)
             <tr class="alert alert-info">
                 <td>Customer:{{$order->name}}</td>
-                <p>Customer:{{$order->surname}}</p>
-                <p>Customer:{{$order->created_at}}</p>
+                <td>Customer:{{$order->surname}}</td>
+                <td>Customer:{{$order->created_at}}</td>
                 <a class="btn btn-primary" href="#">Details</a>
             </tr>
         @endforeach

@@ -11,5 +11,5 @@
 
     <a href="{{route('admin_order')}}" ><h2>Orders</h2>  </a>
 
-
+    <a href="{{route('contact-data')}}" ><h2>Messages</h2>  </a>
 @endsection

@@ -9,8 +9,8 @@
                 <a class="me-3 py-2 px-3 text-dark text-decoration-none" href="{{route('about')}}"><h4>Про нас</h4></a>
                 <a class="me-3 py-2 px-3 text-dark text-decoration-none" href="{{route('contact')}}"><h4>Контакты</h4>
                 </a>
-                <a class="me-3 py-2 px-3 text-dark text-decoration-none" href="{{route('contact-data')}}"><h4>
-                        Сообщения</h4></a>
+{{--                <a class="me-3 py-2 px-3 text-dark text-decoration-none" href="{{route('contact-data')}}"><h4>--}}
+{{--                        Сообщения</h4></a>--}}
 
                 <a class="me-3 py-2 px-3 text-dark text-decoration-none"
                    href="{{route('basket.index')}}">
