@@ -12,67 +12,27 @@ use App\Http\Requests\ContactRequest;
 use  App\Models\Contact;
 use Illuminate\Support\Facades\DB;
 use MongoDB\Driver\Session;
+use phpDocumentor\Reflection\Types\This;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class BasketController extends Controller
 {
     public function index()
     {
-        //var_dump(config('mail.mailers.smtp'));
         return view('basketindex');
     }
 
-    /*  public function index(Request $request)
-      {
-          $basket_id = $request->cookie('basket_id');
-          if (!empty($basket_id)) {
-              $products = Basket::findOrFail($basket_id)->products;
-              return view('basketindex', compact('products'));
-          } else {
-              abort(404);
-          }
-      }
-  */
+
 
     public function checkout()
     {
         return view('basketcheckout');
     }
 
-    /**
-     * Добавляет товар с идентификатором $id в корзину
-     */
-    /* public function add(Request $request, $id)
-     {
-         $basket_id = $request->cookie('basket_id');
-         $quantity = $request->input('quantity') ?? 1;
-         if (empty($basket_id)) {
-             // если корзина еще не существует — создаем объект
-             $basket = Basket::create();
-             // получаем идентификатор, чтобы записать в cookie
-             $basket_id = $basket->id;
-         } else {
-             // корзина уже существует, получаем объект корзины
-             $basket = Basket::findOrFail($basket_id);
-             // обновляем поле `updated_at` таблицы `baskets`
-             $basket->touch();
-         }
-         if ($basket->products->contains($id)) {
-             // если такой товар есть в корзине — изменяем кол-во
-             $pivotRow = $basket->products()->where('picture_id', $id)->first()->pivot;
-             $quantity = $pivotRow->quantity + $quantity;
-             $pivotRow->update(['quantity' => $quantity]);
-         } else {
-             // если такого товара нет в корзине — добавляем его
-             $basket->products()->attach($id, ['quantity' => $quantity]);
-         }
- dump($id);
-         // выполняем редирект обратно на страницу, где была нажата кнопка «В корзину»
-       //  return back()->withCookie(cookie('basket_id', $basket_id, 525600));
-     }
- */
+
     public function add($id)
     {
+        dd(1);
         $product = picture::find($id);
         if (!$product) {
             abort(404);
@@ -90,11 +50,16 @@ class BasketController extends Controller
                 ]
             ];
             session()->put('cart', $cart);
+
             return redirect()->back()->with('success', 'Product added to cart successfully!');
         }
         // if cart not empty then check if this product exist then increment quantity
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
+            dd ( $cart[$id]['quantity']);
+//            if ($cart[$id]['quantity']>$id["quantity"]){
+//                echo "Not quantity!";
+//            }
             session()->put('cart', $cart);
             return redirect()->back()->with('success', 'Product added to cart successfully!');
         }
@@ -108,12 +73,25 @@ class BasketController extends Controller
         ];
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
+
+        // return response()->json(['success' => 'true']);
+        // return response()->json(['success' => 'false', 'message' => 'not enough items available']);
+        // https://api.jquery.com/jquery.getjson/
+        //return json instead of redirects
     }
 
     public function update(Request $request)
     {
+        // remove, use add
+
         if ($request->id and $request->quantity) {
             $cart = session()->get('cart');
+
+//            if ($cart[$request->id]["quantity"] > DB::table('pictures')->
+//                find('$product->id',['quantity'])) {
+//                echo "Not quantity!";
+//           }
+//            else
             $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
             session()->flash('success', 'Cart updated successfully');
@@ -122,6 +100,7 @@ class BasketController extends Controller
 
     public function remove(Request $request)
     {
+        // remove
         if ($request->id) {
             $cart = session()->get('cart');
             if (isset($cart[$request->id])) {
@@ -152,32 +131,12 @@ class BasketController extends Controller
         $order->comment = $request->input('comment');
         $order->save();
 
-        //$cart = $request->session()->all();
-        // dump($values);
-        //   $cart=$request->session()->get('cart');
-
-
         $ids = array_column($request->session()->get('cart'), 'id');
         $items = picture::whereIn('id', $ids)->get();
         $itemsByIds = [];
         foreach ($items as $item) {
             $itemsByIds[$item->id] = $item;
         }
-//        foreach ($items as $picture) {
-//            if ($picture->price < DB::table('pictures')->where('id', '=', $ids)->
-//                value('price')) {
-//                echo("It is not pictures in this quantity!");
-//            }
-//            dd( $picture->price);
-//            DB::table('pictures')->where('id', '=', $ids)->update(['price' => "`pictures`.price - $picture->price"]);
-//            //  UPDATE `pictures` SET price=price-$quantity WHERE id=$cart[id];
-//            // $picture=new picture();
-//            //      $picture->price=$price-1->input;
-//        }
-        //dd($items);
-
-        //   $input = $request->only(['name', 'address']); //information from basket session!!!
-        //   dump($input);
 
         foreach ($request->session()->get('cart') as $item) {
             $op = new Order_picture();
@@ -189,18 +148,18 @@ class BasketController extends Controller
             //todo check item exists
             $curPic = $itemsByIds[$op->picture_id];
             //todo check quantity
-            if( $curPic->quantity < 1)
-                     {echo "It is not this picture on DataBase" ;}
-           // dd($item["quantity"]);
-            elseif ($curPic->quantity < $item["quantity"] & $curPic->quantity > 1)
-
-            {echo "This pictures in base less than order.Make order less quantity";}
+            dump($curPic);
+            if ($curPic->quantity < 1) {
+                echo "It is not this picture on DataBase";
+            } // dd($item["quantity"]);
+            elseif ($curPic->quantity < $item["quantity"] & $curPic->quantity > 1) {
+                echo "This pictures in base less than order.Make order less quantity";
+            }
 
             $curPic->quantity = $curPic->quantity - $item["quantity"];
-            if($curPic->quantity>0)
-            {$curPic->save();}
-            //todo make ajax adding to cart with jQuery on index page
-            //todo add zoomer like in Rozetka to show image
+            if ($curPic->quantity > 0) {
+                $curPic->save();
+            }
 
 
 //            DB::table('pictures')->where('id', '=', $item["id"])->decrement('quantity', 100);

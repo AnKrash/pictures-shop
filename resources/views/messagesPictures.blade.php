@@ -7,6 +7,9 @@
     <div class="container ">
         <div class="card-group">
             @foreach($data as $el)
+                @if ($el->quantity<1)
+                @continue
+            @endif
                 <div class="card shadow-sm ">
 
                     <img class="bd-placeholder-img card-img-top " style="height: 400px" src="img/{{$el->image}}"
