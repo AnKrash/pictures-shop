@@ -9,12 +9,17 @@
             <div class="col-lg-4">
                 <div class="single-discount-product mt-30">
                     <div class="product-image slick-initialized slick-slider">
-                        <div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 555px; transform: translate3d(0px, 0px, 0px);">
+                        <div class="slick-list draggable">
+                            <div class="slick-track"
+                                 style="opacity: 1; width: 555px; transform: translate3d(0px, 0px, 0px);">
                                 <img
                                     src="img-main/rose.jpg"
                                     alt="Product" class="slick-slide slick-current slick-active"
-                                    data-slick-index="0" aria-hidden="false" style="width:300px;height: 400px" tabindex="0"></div></div>
-                    </div><br><br>
+                                    data-slick-index="0" aria-hidden="false" style="width:300px;height: 400px"
+                                    tabindex="0"></div>
+                        </div>
+                    </div>
+                    <br><br>
                     <div class="product-content">
                         <h2 class="content-title mb-15">Classic <br></h2><h4> For your home</h4><br>
                         <a href="{{route('allDataPictures')}}">View Collection <i class="lni-chevron-right"></i></a>
@@ -29,9 +34,12 @@
                             translate3d(0px, 0px, 0px);">
                                 <img src="img-main/pixabay.jpg"
                                      alt="Product" class="slick-slide slick-current slick-active"
-                                     data-slick-index="0" aria-hidden="false" style="width:300px;height: 400px" tabindex="0">
-                            </div></div>
-                    </div><br><br>
+                                     data-slick-index="0" aria-hidden="false" style="width:300px;height: 400px"
+                                     tabindex="0">
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
                     <div class="product-content">
                         <h2 class="content-title mb-15">Sculpture <br></h2><h4> For your memory</h4><br>
                         <a href="{{route('allDataLamps')}}">View Collection <i class="lni-chevron-right"></i></a>
@@ -41,13 +49,17 @@
             <div class="col-lg-4">
                 <div class="single-discount-product mt-30">
                     <div class="product-image slick-initialized slick-slider">
-                        <div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 555px; transform: translate3d(0px, 0px, 0px);">
+                        <div class="slick-list draggable">
+                            <div class="slick-track"
+                                 style="opacity: 1; width: 555px; transform: translate3d(0px, 0px, 0px);">
                                 <img src="img-main/pexels.jpg"
                                      alt="Product" class="slick-slide slick-current slick-active" data-slick-index="0"
-                                     aria-hidden="false" style="width:300px;height: 400px" tabindex="0"></div></div>
-                    </div><br><br>
+                                     aria-hidden="false" style="width:300px;height: 400px" tabindex="0"></div>
+                        </div>
+                    </div>
+                    <br><br>
                     <div class="product-content">
-                        <h2 class="content-title mb-15">Modern art <br> </h2><h4>For you fantasy</h4><br>
+                        <h2 class="content-title mb-15">Modern art <br></h2><h4>For you fantasy</h4><br>
                         <a href="{{route('allDataVase')}}">View Collection <i class="lni-chevron-right"></i></a>
                     </div>
                 </div>
@@ -57,7 +69,7 @@
 @endsection
 
 @section('aside')
-@parent
+    @parent
 
 
 @endsection

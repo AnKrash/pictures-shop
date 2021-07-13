@@ -1,9 +1,9 @@
 @section('aside')
-<div class="aside">
+    <div class="aside">
 
-    @show
+        @show
 
-    @if((Request::is('basket/index')))
-        @include('inc.dostavka')
-    @endif
-</div>
+        @if((Request::is('basket/index')))
+            @include('inc.dostavka')
+        @endif
+    </div>

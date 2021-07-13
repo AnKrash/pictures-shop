@@ -37,13 +37,6 @@ Route::get('/lamps', [BDController::class, 'allDataLamps'])
 Route::get('/allDataVasas', [BDController::class, 'allDataVase'])
     ->name('allDataVase');
 
-//Route::get('/admin', [ContactController::class, 'admin'])
-//    ->name('admin')->middleware('auth');
-//
-//
-//Route::post('/bdpictures/submit', [BDController::class, 'submitPictures'])
-//    ->name('admin-form-pictures')->middleware('auth');;
-
 
 Route::get('/contact/all/{id}/update', [ContactController::class, 'updateMessage'])->name('contact-update');
 Route::post('/contact/all/{id}/update', [ContactController::class, 'updateMessageSubmit'])->name('contact-update-submit');
@@ -67,13 +60,9 @@ Route::patch('/basket/update', [BasketController::class, 'update']);
 Route::delete('/basket/remove', [BasketController::class, 'remove']);
 Route::get('basketcheckout', [BasketController::class, 'checkout'])->name('basketchekout');
 Route::post('/basket/saveorder', [BasketController::class, 'saveOrder'])->name('basket.saveorder');
-//Route::get('/adminOrders', [BDController::class, 'adminOrders'])
-//  ->name('adminOrders');
-//
-//Route::get('admin_order', [\App\Http\Controllers\AdminOrderController::class, 'index'])
-//    ->name('admin_order')->middleware('auth');;
-//Route::get('show/{id}', [\App\Http\Controllers\AdminOrderController::class, 'show'])
-//    ->name('show')->middleware('auth');;
+
+Route::get('/basket/change_quantity', [BasketController::class, 'changeQuantity']);//!!!
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

@@ -4,14 +4,17 @@
 
 @section('content')
     {{--    todo add div class text-danger for handling of errors--}}
+    <script src="https://api.jquery.com/jquery.getjson/"></script>
 
-    <div class="">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+    </script>
+    <div class="comparison">
 
     </div>
-{{--                      @if($details['quantity'] > DB::table('pictures')->find($id)['quantity'])--}}
-{{--                          GET LESS QUANTITY!--}}
 
-{{--                    @endif--}}
     <table id="cart" class="table table-hover table-condensed">
         <thead>
         <tr>
@@ -39,14 +42,15 @@
                     </td>
                     <td data-th="Price">${{ $details['price'] }}</td>
                     <td data-th="Quantity">
-                        <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity"/>
+                        <input type="number" data-id="{{$id}}" value="{{ $details['quantity'] }}"
+                               class="form-control quantity"/>
+                        <p class="text-danger quantity-error"></p>
                     </td>
-
 
                     <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
                     <td class="actions" data-th="">
-{{--                        <button class="btn btn-info btn-sm update-cart" data-id="{{ $id }}">
-<i class="fa fa-refresh"></i></button>--}}
+                        {{--                        <button class="btn btn-info btn-sm update-cart" data-id="{{ $id }}">
+                        <i class="fa fa-refresh"></i></button>--}}
                         <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i
                                 class="fa fa-trash-o"></i></button>
                     </td>

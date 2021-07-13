@@ -17,36 +17,10 @@ use Illuminate\Support\Facades\DB;
 
 class BDController extends Controller
 {
-    /*  public function submitVase(BDRequest $req)//  вазы!!
-      {
-          // dd($req->input('subject'));
-          //$validation=$req->validate(
-          // ['subject'=>'required|min:5|max:50',
-          //'message'=>'required']
-
-          // );
-          $vase = new vases();
-          $vase->name = $req->input('name');//записываем новые значения в БД
-          $vase->code = $req->input('code');
-          $vase->description = $req->input('description');
-          $vase->image = $req->input('image');
-          $vase->price = $req->input('price');
-
-          $vase->save();//сохраняем запись в БД
-
-          return redirect()->route('admin')->with('success', 'Запись в базу сделана!');
-          //возвращаем на страницу 'admin' и выводим сообщение
-     }*/
 
     public function submitPictures(BDRequest $req)//  картины!
     {
-        // dd($req->input('subject'));
-        //$validation=$req->validate(
-        // ['subject'=>'required|min:5|max:50',
-        //'message'=>'required']
 
-        // );
-        //var_dump(1);
         $vase = new picture();
         $vase->name = $req->input('name');//записываем новые значения в БД
         $vase->code = $req->input('code');
@@ -60,26 +34,7 @@ class BDController extends Controller
         //возвращаем на страницу 'admin' и выводим сообщение
     }
 
-    /*  public function submitAccess(BDRequest $req)//  картины!
-      {
-          // dd($req->input('subject'));
-          //$validation=$req->validate(
-          // ['subject'=>'required|min:5|max:50',
-          //'message'=>'required']
 
-          // );
-          $vase = new lamps();
-          $vase->name = $req->input('name');//записываем новые значения в БД
-          $vase->code = $req->input('code');
-          $vase->description = $req->input('description');
-          $vase->image = $req->input('image');
-          $vase->price = $req->input('price');
-
-          $vase->save();//сохраняем запись в БД
-
-          return redirect()->route('admin')->with('success', 'Запись в базу сделана!');
-          //возвращаем на страницу 'admin' и выводим сообщение
-      }*/
     public function allDataVase()//выводит все сообщения
     {
         $contact = new picture();
@@ -89,10 +44,8 @@ class BDController extends Controller
 
     }
 
-    /* public function messagesVasas(){
-         return view('inc/messagesVasas');
-     }*/
-   public function allDataPictures()//выводит все сообщения
+
+    public function allDataPictures()//выводит все сообщения
     {
         $contact = new picture();
 
@@ -108,13 +61,7 @@ class BDController extends Controller
             ['data' => $contact->where('code', '=', '3')->paginate(15)]);
     }
 
-    /*  public function showOneMessageLamp($id)//выводит одно сообщение
-      {
 
-          $contact = new lamps;
-          return view('one-message-lamp', ['data' => $contact->find ($id) ]);
-   }
-    */
     public function showOneMessagePicture($id)//выводит одно сообщение
     {
 
@@ -123,26 +70,7 @@ class BDController extends Controller
 
     }
 
-  /*  public function index()
-    {
 
-
-        $orders = new Order();// Code from Master
-        $orders = $orders->get();
-//        foreach ($orders as $o) {
-//
-//            foreach ($o->pictures as $p) {
-//                $data = $p->id;//id picture
-//
-//                $quantity = $p->pivot->quantity;//quantity of picture
-//
-//                return view('adminOrders', $data, $quantity);
-//            }
-//
-//        }
-
-        return view('admin_order/index', ['orders' => $orders]);
-    }*/
 }
 
 

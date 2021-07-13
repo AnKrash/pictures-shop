@@ -5,7 +5,6 @@
     <h1>Вы в базе данных PICTURES</h1>
     <p></p>
 
-
     <form action={{route('form-pictures')}} method="post">
         @csrf
 
@@ -20,23 +19,7 @@
                    placeholder="Code 1-Modern art, Code 2-Classic, Code 3-Sculpture" id="code"
                    class="form-control">
         </div>
-      <!--  <div class="dropdown-menu">
-            <h6 class="dropdown-header">Dropdown header</h6>
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-        </div>
-        <div class="dropdown open">
-            <a class="btn btn-secondary dropdown-toggle"  id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Choose the class
-            </a>
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </div>
-        -->
         <div class="form-group">
             <label for="message"> description</label>
             <textarea name="message" id="message" placeholder="Input items description"

@@ -5,11 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;
 use  App\Models\Contact;
+use Illuminate\Routing\Controller;
 
 class ContactController extends Controller
 {
-    public function submit(ContactRequest $req)
+    public function submit(Request $req)
     {
+        //todo add validation to all forms, check if it works
+        //todo delete all commented code
+        // pretify everywhere command+option+L
+
+        $validated = $req->validate([
+            'name' => 'required|min:5|max:50',
+            'email' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
 
         $contact = new Contact();
         $contact->name = $req->input('name');//записываем новые значения в БД
@@ -18,16 +29,17 @@ class ContactController extends Controller
         $contact->message = $req->input('message');
 
         $contact->save();//сохраняем запись в БД
+
         return redirect()->route('home')->with('success', 'Сообщение было отправлено!');
         //возвращаем на страницу 'home' и выводим сообщение
     }
-
 
 
     public function allData()//выводит все сообщения
     {
 
         $contact = new Contact();
+
         return view('messages', ['data1' => $contact->all()]);
 
     }
@@ -36,6 +48,7 @@ class ContactController extends Controller
     {
 
         $contact = new Contact();
+
         return view('one-message', ['data1' => $contact->find($id)]);
 
     }
@@ -43,6 +56,7 @@ class ContactController extends Controller
     public function updateMessage($id)//
     {
         $contact = new Contact();
+
         return view('update-message', ['data1' => $contact->find($id)]);
     }
 
@@ -54,8 +68,8 @@ class ContactController extends Controller
         $contact->email = $req->input('email');
         $contact->subject = $req->input('subject');
         $contact->message = $req->input('message');
-
         $contact->save();
+
         return redirect()->route('contact-data-one', $id)->with('success', 'Сообщение было обновлено!');
     }
 
@@ -64,27 +78,40 @@ class ContactController extends Controller
         Contact::find($id)->delete();
         return redirect()->route('contact-data')->with('success', 'Сообщение было удалено!');
     }
-    public function lamps(){
+
+    public function lamps()
+    {
 
         return view('inc/lamps');
     }
-    public function pictures(){
+
+    public function pictures()
+    {
         return view('inc/pictures');
     }
-    public function vase(){
+
+    public function vase()
+    {
         return view('inc/vase');
     }
 
-    public function admin(){
+    public function admin()
+    {
         return view('admin');
     }
-    public function bdvase(){
+
+    public function bdvase()
+    {
         return view('bdvase');
     }
-    public function bdpictures(){
+
+    public function bdpictures()
+    {
         return view('bdpictures');
     }
-    public function bdaccess(){
+
+    public function bdaccess()
+    {
         return view('bdaccess');
     }
 

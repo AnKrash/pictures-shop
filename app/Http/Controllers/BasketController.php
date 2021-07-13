@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use MongoDB\Driver\Session;
 use phpDocumentor\Reflection\Types\This;
 use PHPMailer\PHPMailer\PHPMailer;
+use \Illuminate\Http\JsonResponse;
 
 class BasketController extends Controller
 {
@@ -21,7 +22,6 @@ class BasketController extends Controller
     {
         return view('basketindex');
     }
-
 
 
     public function checkout()
@@ -32,7 +32,6 @@ class BasketController extends Controller
 
     public function add($id)
     {
-        dd(1);
         $product = picture::find($id);
         if (!$product) {
             abort(404);
@@ -56,10 +55,8 @@ class BasketController extends Controller
         // if cart not empty then check if this product exist then increment quantity
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
-            dd ( $cart[$id]['quantity']);
-//            if ($cart[$id]['quantity']>$id["quantity"]){
-//                echo "Not quantity!";
-//            }
+
+
             session()->put('cart', $cart);
             return redirect()->back()->with('success', 'Product added to cart successfully!');
         }
@@ -74,28 +71,7 @@ class BasketController extends Controller
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
 
-        // return response()->json(['success' => 'true']);
-        // return response()->json(['success' => 'false', 'message' => 'not enough items available']);
-        // https://api.jquery.com/jquery.getjson/
-        //return json instead of redirects
-    }
 
-    public function update(Request $request)
-    {
-        // remove, use add
-
-        if ($request->id and $request->quantity) {
-            $cart = session()->get('cart');
-
-//            if ($cart[$request->id]["quantity"] > DB::table('pictures')->
-//                find('$product->id',['quantity'])) {
-//                echo "Not quantity!";
-//           }
-//            else
-            $cart[$request->id]["quantity"] = $request->quantity;
-            session()->put('cart', $cart);
-            session()->flash('success', 'Cart updated successfully');
-        }
     }
 
     public function remove(Request $request)
@@ -111,11 +87,27 @@ class BasketController extends Controller
         }
     }
 
+    public function changeQuantity(Request $request)
+    {
+        $itemQuantity = DB::table('pictures')->find($request->get("id"), ['quantity']);
+        if (empty($itemQuantity)) {
+
+            return response()->json(['success' => false, 'message' => 'item not found']);
+        }
+
+        // comparison of quantity of DB and cart
+        if ($request->get("quantity") > $itemQuantity->quantity) {
+
+            return response()->json(['success' => false, 'message' => 'not enough items available']);
+        }
+
+        return response()->json(['success' => true]);
+    }
 
     public function saveOrder(Request $request)
     {
         // проверяем данные формы оформления
-        $this->validate($request, [
+        $error = $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|max:255',
@@ -145,9 +137,9 @@ class BasketController extends Controller
             $op->order_id = $order->id;
             $op->save();
 
-            //todo check item exists
+            // check item exists
             $curPic = $itemsByIds[$op->picture_id];
-            //todo check quantity
+            // check quantity
             dump($curPic);
             if ($curPic->quantity < 1) {
                 echo "It is not this picture on DataBase";
@@ -161,8 +153,6 @@ class BasketController extends Controller
                 $curPic->save();
             }
 
-
-//            DB::table('pictures')->where('id', '=', $item["id"])->decrement('quantity', 100);
         }
 
         $mailSets = config('mail.mailers.smtp');
@@ -203,71 +193,6 @@ class BasketController extends Controller
 
         return view('saveorder');
 
-        //  $cart=$request->session()->get();
-        //   $request->quantity=$cart[$request->id]["quantity"];
-        //   dump($cart);
-
-        //     $carts = $request->session()->all();
-        //       dump($carts);
-
-
-        // foreach ($cart as $key){
-        /* foreach ($cart as $key=>$value)
-           {
-   if ($key="name"){
-
-       echo $value;}
-
-   }*/
-        //   }
-
-        //;
-        //$i=$request->session()->get('picture_id');
-        /*  if (isset($cart[$id])) {
-              $id= $request->session()->get('id', '');
-              dump($id);}
-        */
-        // dump($values);
-        /*foreach ($values as $value){
-var_dump($values);
-            redirect()->back();
-            //return view ('/');
-        }
-        */
-//dump($values);
-
-
-        //$orderpictures=new Order_picture();
-        // $cart [$request->id]->input('picture_id');
-
-        //$cart->quantity = $request->input('quantity');
-        // $cart->save();
-
-
-        /*    $basket = Basket::getBasket();
-            $user_id = auth()->check() ? auth()->user()->id : null;
-            $order = Orders::create(
-                $request->all() + [ 'amount' => $basket->getAmount(),'user_id' => $user_id]
-            );
-
-            foreach ($basket->products as $product) {
-                $order->items()->create([
-                    'product_id' => $product->id,
-                    'name' => $product->name,
-                    'price' => $product->price,
-                    'quantity' => $product->pivot->quantity,
-                    'cost' => $product->price * $product->pivot->quantity,
-                ]);
-            }
-
-            // уничтожаем корзину
-            $basket->delete();
-
-            return redirect()
-                ->route('basket.success')
-                ->with('success', 'Ваш заказ успешно размещен');
-        }
-        */
     }
 
 }

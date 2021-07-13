@@ -2,7 +2,7 @@
 @section('title-block')Save order @endsection
 
 @section('content')
-    <h1>Thank you  for your order!</h1>
+    <h1>Thank you for your order!</h1>
     <table id="cart" class="table table-hover table-condensed">
 
         <tbody>
