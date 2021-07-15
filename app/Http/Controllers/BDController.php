@@ -17,10 +17,8 @@ use Illuminate\Support\Facades\DB;
 
 class BDController extends Controller
 {
-
     public function submitPictures(BDRequest $req)//  картины!
     {
-
         $vase = new picture();
         $vase->name = $req->input('name');//записываем новые значения в БД
         $vase->code = $req->input('code');
@@ -33,7 +31,6 @@ class BDController extends Controller
         return redirect()->route('admin')->with('success', 'Запись в базу сделана!');
         //возвращаем на страницу 'admin' и выводим сообщение
     }
-
 
     public function allDataVase()//выводит все сообщения
     {
@@ -64,13 +61,10 @@ class BDController extends Controller
 
     public function showOneMessagePicture($id)//выводит одно сообщение
     {
-
         $contact = new picture();
+
         return view('one-message-picture', ['product' => $contact->find($id)]);
-
     }
-
-
 }
 
 

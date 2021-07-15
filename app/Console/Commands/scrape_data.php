@@ -100,8 +100,6 @@ class scrape_data extends Command
                     $code = 1;
                 }
 
-
-
                 $count++;
 
                 file_put_contents("public/img/" . $count . $extension, file_get_contents($url));

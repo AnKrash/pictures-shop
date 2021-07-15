@@ -15,7 +15,6 @@ class AdminOrderController extends Controller
      */
     public function index()
     {
-
         $orders = new Order();// Code from Master
         $orders = $orders->get();
 
@@ -55,7 +54,6 @@ class AdminOrderController extends Controller
         $order = Order::findOrFail($id);
 
         return view('admin_order/show', ['order' => $order]);
-
     }
 
     /**

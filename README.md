@@ -1,4 +1,8 @@
+# Pictures-shop.
 
-Pictures-shop.
-It's an online art store that's in development.
+Online art store (currently in development).
+
+Based on Laravel and MySQL.
+.env file with mail and DB settings required.
+
 

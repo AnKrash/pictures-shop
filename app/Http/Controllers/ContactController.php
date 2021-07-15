@@ -9,18 +9,18 @@ use Illuminate\Routing\Controller;
 
 class ContactController extends Controller
 {
-    public function submit(Request $req)
+    public function submit(ContactRequest $req)
     {
         //todo add validation to all forms, check if it works
         //todo delete all commented code
         // pretify everywhere command+option+L
 
-        $validated = $req->validate([
-            'name' => 'required|min:5|max:50',
-            'email' => 'required',
-            'subject' => 'required',
-            'message' => 'required',
-        ]);
+//        $validated = $req->validate([
+//            'name' => 'required|min:5|max:50',
+//            'email' => 'required',
+//            'subject' => 'required',
+//            'message' => 'required',
+//        ]);
 
         $contact = new Contact();
         $contact->name = $req->input('name');//записываем новые значения в БД

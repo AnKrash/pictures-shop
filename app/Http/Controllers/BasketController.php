@@ -23,12 +23,10 @@ class BasketController extends Controller
         return view('basketindex');
     }
 
-
     public function checkout()
     {
         return view('basketcheckout');
     }
-
 
     public function add($id)
     {
@@ -55,9 +53,8 @@ class BasketController extends Controller
         // if cart not empty then check if this product exist then increment quantity
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
-
-
             session()->put('cart', $cart);
+
             return redirect()->back()->with('success', 'Product added to cart successfully!');
         }
         // if item not exist in cart then add to cart with quantity = 1
@@ -69,9 +66,8 @@ class BasketController extends Controller
             "id" => $product->id
         ];
         session()->put('cart', $cart);
+
         return redirect()->back()->with('success', 'Product added to cart successfully!');
-
-
     }
 
     public function remove(Request $request)
@@ -91,7 +87,6 @@ class BasketController extends Controller
     {
         $itemQuantity = DB::table('pictures')->find($request->get("id"), ['quantity']);
         if (empty($itemQuantity)) {
-
             return response()->json(['success' => false, 'message' => 'item not found']);
         }
 

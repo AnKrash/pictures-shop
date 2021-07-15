@@ -30,14 +30,4 @@ class ContactRequest extends FormRequest
                     'message'=>'required'
         ];
     }
-    public function attributes()
-    {
-
-        return ['name'=>'Your name'];
-    }
-    public function messages()
-    {
-
-        return ['name.required'=>'Поле имя является обязательным!'];
-    }
 }
