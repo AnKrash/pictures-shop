@@ -6,10 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>"@yield('title-block')</title>
+    @section('javascript' )
+        <script src="{{asset('js/jquery.min.js')}}"></script>
+        <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
+    @endsection
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/xzoom/dist/xzoom.css" media="all" />
-    <!--   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/xzoom/dist/xzoom.css" media="all"/>
+
 </head>
 <body>
 @include('inc.header')

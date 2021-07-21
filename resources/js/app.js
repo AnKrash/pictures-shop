@@ -1,4 +1,5 @@
 import 'bootstrap';
+require('./bootstrap')
 
 $(function () {
     $(".quantity").on('input', function () {
