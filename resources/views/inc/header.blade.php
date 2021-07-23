@@ -14,9 +14,8 @@
 
                 <a class="me-3 py-2 px-3 text-dark text-decoration-none"
                    href="{{route('basket.index')}}">
-                    <img src="/Img-main/shopping-cart-empty-side-view.svg" height="45"
-                         alt="basket">
 
+                    <i class="fas fa-shopping-cart fa-2x"></i>
 
                     <?php $quantity_cart = 0 ?>
                     @if (session('cart'))

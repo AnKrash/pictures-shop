@@ -11,8 +11,9 @@
         <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     @endsection
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{asset('css/app.css')}}">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/xzoom/dist/xzoom.css" media="all"/>
-
+{{--    --}}
 </head>
 <body>
 @include('inc.header')
